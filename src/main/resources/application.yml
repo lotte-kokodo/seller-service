@@ -3,12 +3,12 @@ server:
 spring:
   application:
     name: seller-service
-#  zipkin:
-#    base-url: http://127.0.0.1:9411
-#    enabled: true
-#  sleuth:
-#    sampler:
-#      probability: 1.0
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
   profiles:
     active: mysql
 
@@ -81,7 +81,7 @@ spring:
     hikari:
       jdbc-url: jdbc:mysql://localhost:3306/mydb
       username: root
-      password: BITBIT123
+      password:
       driver-class-name: com.mysql.jdbc.Driver
   batch:
     jdbc:
