@@ -1,4 +1,4 @@
-package shop.kokodo.sellerservice.dto.response;
+package shop.kokodo.sellerservice.dto.product.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

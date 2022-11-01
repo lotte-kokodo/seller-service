@@ -1,23 +1,10 @@
 package shop.kokodo.sellerservice.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import shop.kokodo.sellerservice.repository.SellerRepository;
+import shop.kokodo.sellerservice.entity.Seller;
 
-/**
- * packageName    : shop.kokodo.sellerservice.controller
- * fileName       : SellerService
- * author         : namhyeop
- * date           : 2022/11/01
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2022/11/01        namhyeop       최초 생성
- */
-@Service
-@RequiredArgsConstructor
-public class SellerService {
+import java.util.Optional;
 
-    private final SellerRepository sellerRepository;
+public interface SellerService {
+
+    public Optional<Seller> findBySellerId(Long sellerId);
 }
