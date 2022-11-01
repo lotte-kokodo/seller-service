@@ -3,7 +3,7 @@ package shop.kokodo.sellerservice.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import shop.kokodo.sellerservice.dto.response.ResponseProduct;
+import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 
 import java.util.List;
 import java.util.Map;

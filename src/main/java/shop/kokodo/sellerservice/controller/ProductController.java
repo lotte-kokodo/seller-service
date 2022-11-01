@@ -1,14 +1,17 @@
 package shop.kokodo.sellerservice.controller;
 
+import com.netflix.discovery.converters.Auto;
 import feign.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shop.kokodo.sellerservice.client.SellerServiceClient;
-import shop.kokodo.sellerservice.dto.response.ResponseProduct;
+import shop.kokodo.sellerservice.controller.response.RestResponse;
+import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
+import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
+import shop.kokodo.sellerservice.dto.response.Response;
+import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +21,25 @@ import java.util.Map;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final SellerServiceClient sellerServiceClient;
+    private SellerServiceClient sellerServiceClient;
+    private ProductSaveProducer productSaveProducer;
 
     @Autowired
-    public ProductController(SellerServiceClient sellerServiceClient) {
+    public ProductController(SellerServiceClient sellerServiceClient, ProductSaveProducer productSaveProducer) {
         this.sellerServiceClient = sellerServiceClient;
+        this.productSaveProducer = productSaveProducer;
+    }
+
+
+    @PostMapping
+    public Response saveProduct(@RequestBody RequestProduct requestProduct){
+        /* kafka save product*/
+        RequestProduct requestProduct1 = productSaveProducer.send("product-save",requestProduct);
+        if(requestProduct1 == null) {
+            return Response.failure(-1000,"상품 등록에 실패했습니다.");
+        }
+
+        return Response.success();
     }
 
     @GetMapping
