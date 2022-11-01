@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import shop.kokodo.sellerservice.client.SellerServiceClient;
 import shop.kokodo.sellerservice.controller.response.RestResponse;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
 import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 import shop.kokodo.sellerservice.dto.response.Response;
 import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
+import shop.kokodo.sellerservice.s3.AwsS3Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,16 +25,20 @@ public class ProductController {
 
     private SellerServiceClient sellerServiceClient;
     private ProductSaveProducer productSaveProducer;
+    private final AwsS3Service awsS3Service;
 
     @Autowired
-    public ProductController(SellerServiceClient sellerServiceClient, ProductSaveProducer productSaveProducer) {
+    public ProductController(SellerServiceClient sellerServiceClient, ProductSaveProducer productSaveProducer, AwsS3Service awsS3Service) {
         this.sellerServiceClient = sellerServiceClient;
         this.productSaveProducer = productSaveProducer;
+        this.awsS3Service = awsS3Service;
     }
-
 
     @PostMapping
     public Response saveProduct(@RequestBody RequestProduct requestProduct){
+        /* s3 */
+        // uploadFile()
+
         /* kafka save product*/
         RequestProduct requestProduct1 = productSaveProducer.send("product-save",requestProduct);
         if(requestProduct1 == null) {
@@ -55,5 +61,12 @@ public class ProductController {
         List<ResponseProduct> list = sellerServiceClient.findByProductNameAndStatusAndDate(params);
 
         return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
+    @PostMapping("/upload")
+    public String uploadFile(
+            @RequestParam("productName") String productName,
+            @RequestPart(value = "file")MultipartFile multipartFile) {
+        return awsS3Service.uploadFileV1(productName, multipartFile);
     }
 }
