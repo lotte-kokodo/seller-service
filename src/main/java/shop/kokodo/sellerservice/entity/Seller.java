@@ -1,9 +1,6 @@
 package shop.kokodo.sellerservice.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -22,6 +19,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString
 public class Seller extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

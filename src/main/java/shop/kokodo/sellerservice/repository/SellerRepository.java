@@ -15,4 +15,6 @@ import shop.kokodo.sellerservice.entity.Seller;
  * 2022/10/17        namhyeop       최초 생성
  */
 public interface SellerRepository extends JpaRepository<Seller, Long> {
+
+
 }
