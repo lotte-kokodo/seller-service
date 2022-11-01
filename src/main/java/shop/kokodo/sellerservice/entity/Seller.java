@@ -3,23 +3,12 @@ package shop.kokodo.sellerservice.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-/**
- * packageName    : shop.kokodo.sellerservice.entity
- * fileName       : seller
- * author         : namhyeop
- * date           : 2022/10/17
- * description    :
- * ===========================================================
- * DATE              AUTHOR             NOTE
- * -----------------------------------------------------------
- * 2022/10/17        namhyeop       최초 생성
- */
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString
 public class Seller extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +19,8 @@ public class Seller extends BaseEntity{
 //    @JoinColumn(name = "commission_policy")
 //    private CommissionPolicy commissionPolicy;
 
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
+    private List<SellerFinanceInfo> sellerFinanceInfo;
     private String userLongId;
 
     private String userPassWord;
@@ -61,6 +52,4 @@ public class Seller extends BaseEntity{
     private Boolean retailAgree;
 
     private String grade;
-
-
 }
