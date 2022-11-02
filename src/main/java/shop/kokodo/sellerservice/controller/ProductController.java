@@ -35,9 +35,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public Response saveProduct(@RequestBody RequestProduct requestProduct){
-        /* s3 */
-        // uploadFile()
+    public Response saveProduct(@RequestPart(value = "data") RequestProduct requestProduct,
+                                @RequestPart(value = "file") MultipartFile multipartFile){
+        System.out.println(requestProduct.toString());
+        if(multipartFile != null) {
+            /* s3 */
+            requestProduct.setThumbnail(uploadFile(requestProduct.getName(), multipartFile));
+        }
 
         /* kafka save product*/
         RequestProduct requestProduct1 = productSaveProducer.send("product-save",requestProduct);
@@ -63,10 +67,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @PostMapping("/upload")
-    public String uploadFile(
-            @RequestParam("productName") String productName,
-            @RequestPart(value = "file")MultipartFile multipartFile) {
+    public String uploadFile(String productName, MultipartFile multipartFile) {
         return awsS3Service.uploadFileV1(productName, multipartFile);
     }
 }
