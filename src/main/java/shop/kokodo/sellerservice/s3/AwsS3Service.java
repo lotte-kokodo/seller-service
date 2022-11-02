@@ -27,10 +27,10 @@ public class AwsS3Service {
     private String bucketName;
 
     @Transactional
-    public String uploadFileV1(String productName, MultipartFile multipartFile) {
+    public String uploadFileV1(MultipartFile multipartFile) {
         validateFileExists(multipartFile);
 
-        String fileName = CommonUtils.buildFileName(productName, multipartFile.getOriginalFilename());
+        String fileName = CommonUtils.buildFileName(multipartFile.getOriginalFilename());
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(multipartFile.getContentType());
