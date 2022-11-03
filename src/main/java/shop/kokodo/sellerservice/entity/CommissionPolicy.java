@@ -24,7 +24,7 @@ public class CommissionPolicy extends BaseEntity{
     @Id @GeneratedValue
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
@@ -50,5 +50,16 @@ public class CommissionPolicy extends BaseEntity{
         CommissionPolicy commissionPolicy = new CommissionPolicy();
         commissionPolicy.setSeller(seller);
         return commissionPolicy;
+    }
+
+    public CommissionPolicy(Seller seller, Double basic, Double salesPromotion, Double firstPaymentDelivery, Double deliverySupport, Double discountSupport, Double mediumCompanyCostRefund, Double etc) {
+        this.seller = seller;
+        this.basic = basic;
+        this.salesPromotion = salesPromotion;
+        this.firstPaymentDelivery = firstPaymentDelivery;
+        this.deliverySupport = deliverySupport;
+        this.discountSupport = discountSupport;
+        this.mediumCompanyCostRefund = mediumCompanyCostRefund;
+        this.etc = etc;
     }
 }
