@@ -68,12 +68,12 @@ cloud:
   aws:
     # AWS 접근 키
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_KEY}
+      access-key:
+      secret-key:
     # S3 정보
     s3:
-      bucket: ${AWS_S3_BUCKET}
+      bucket:
     region:
-      static: ${AWS_S3_REGION}
+      static:
     stack:
       auto: false
