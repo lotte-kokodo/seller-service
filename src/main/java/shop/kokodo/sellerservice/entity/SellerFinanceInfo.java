@@ -26,4 +26,10 @@ public class SellerFinanceInfo extends BaseEntity{
     private String accountHolder;
     private Boolean delegateAccount;
 
+    public SellerFinanceInfo(String bankName, String accountNumber, String accountHolder, Boolean delegateAccount) {
+        this.bankName = bankName;
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.delegateAccount = delegateAccount;
+    }
 }

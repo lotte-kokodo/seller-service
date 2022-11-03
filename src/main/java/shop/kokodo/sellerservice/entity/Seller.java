@@ -21,7 +21,7 @@ public class Seller extends BaseEntity{
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<SellerFinanceInfo> sellerFinanceInfo;
-    private String userLongId;
+    private String userLoginId;
 
     private String userPassWord;
 
@@ -52,4 +52,24 @@ public class Seller extends BaseEntity{
     private Boolean retailAgree;
 
     private String grade;
+
+    public Seller(List<SellerFinanceInfo> sellerFinanceInfo, String userLongId, String userPassWord, String phone, String email, Boolean phoneAgree, Boolean emailAgree, String birthday, String name, Long balance, String rePos, String releasePos, String reCourier, String retailCourier, Boolean returnAgree, Boolean retailAgree, String grade) {
+        this.sellerFinanceInfo = sellerFinanceInfo;
+        this.userLoginId = userLongId;
+        this.userPassWord = userPassWord;
+        this.phone = phone;
+        this.email = email;
+        this.phoneAgree = phoneAgree;
+        this.emailAgree = emailAgree;
+        this.birthday = birthday;
+        this.name = name;
+        this.balance = balance;
+        this.rePos = rePos;
+        this.releasePos = releasePos;
+        this.reCourier = reCourier;
+        this.retailCourier = retailCourier;
+        this.returnAgree = returnAgree;
+        this.retailAgree = retailAgree;
+        this.grade = grade;
+    }
 }
