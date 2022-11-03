@@ -63,16 +63,24 @@ product-service:
   exception:
     product_is_empty: There is no item
 
+# AWS Secret Manager
+aws:
+  secretsmanager:
+    name: kokodo
+    region: ap-northeast-1
+    prefix: /secret
+
+# AWS Bucket
 cloud:
   aws:
     # AWS 접근 키
     credentials:
-      access-key:
-      secret-key:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
     # S3 정보
     s3:
-      bucket:
+      bucket: ${AWS_S3_BUCKET}
     region:
-      static:
+      static: ${AWS_S3_REGION}
     stack:
       auto: false
