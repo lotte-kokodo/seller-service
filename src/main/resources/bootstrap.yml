@@ -1,0 +1,6 @@
+# AWS Secret Manager
+aws:
+  secretsmanager:
+    name: kokodo
+    region: ap-northeast-1
+    prefix: /secret
