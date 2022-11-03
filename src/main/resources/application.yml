@@ -62,3 +62,17 @@ product-service:
   url: http://PRODUCT-SERVICE/product-service/product
   exception:
     product_is_empty: There is no item
+
+cloud:
+  aws:
+    # AWS 접근 키
+    credentials:
+      access-key:
+      secret-key:
+    # S3 정보
+    s3:
+      bucket:
+    region:
+      static:
+    stack:
+      auto: false
