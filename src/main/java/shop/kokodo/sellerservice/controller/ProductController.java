@@ -3,6 +3,8 @@ package shop.kokodo.sellerservice.controller;
 
 import feign.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
 import shop.kokodo.sellerservice.s3.AwsS3Service;
 import shop.kokodo.sellerservice.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +30,13 @@ import java.util.Map;
 public class ProductController {
     private final SellerServiceClient sellerServiceClient;
     private final ProductService productService;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Autowired
-    public ProductController(SellerServiceClient sellerServiceClient, ProductService productService) {
+    public ProductController(SellerServiceClient sellerServiceClient, ProductService productService, CircuitBreakerFactory circuitBreakerFactory) {
         this.sellerServiceClient = sellerServiceClient;
         this.productService = productService;
+        this.circuitBreakerFactory = circuitBreakerFactory;
     }
 
     @PostMapping
@@ -64,8 +69,9 @@ public class ProductController {
         params.put("endDate",endDate);
         params.put("sellerId",sellerId);
 
-        List<ResponseProduct> list = sellerServiceClient.findByProductNameAndStatusAndDate(params);
-
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerCircuit");
+        List<ResponseProduct> list = circuitBreaker.run(() -> sellerServiceClient.findByProductNameAndStatusAndDate(params),
+                throwable -> new ArrayList<>());
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 }
