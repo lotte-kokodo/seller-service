@@ -1,10 +1,12 @@
 package shop.kokodo.sellerservice.service;
 
-import shop.kokodo.sellerservice.entity.Seller;
-
 import java.util.Optional;
+import shop.kokodo.sellerservice.dto.SignupRequest;
+import shop.kokodo.sellerservice.entity.Seller;
 
 public interface SellerService {
 
-    public Optional<Seller> findBySellerId(Long sellerId);
+    Optional<Seller> findBySellerId(Long sellerId);
+
+    Seller createSeller(SignupRequest req);
 }
