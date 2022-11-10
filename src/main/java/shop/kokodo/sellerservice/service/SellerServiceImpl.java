@@ -41,4 +41,11 @@ public class SellerServiceImpl implements SellerService{
         sellerRepository.save(newSeller);
         return newSeller;
     }
+
+    @Override
+    public String getSellerName(Long sellerId) {
+        Seller seller = sellerRepository.findById(sellerId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 판매자입니다."));
+        return seller.getName();
+    }
 }

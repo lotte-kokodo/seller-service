@@ -9,4 +9,6 @@ public interface SellerService {
     Optional<Seller> findBySellerId(Long sellerId);
 
     Seller createSeller(SignupRequest req);
+
+    String getSellerName(Long sellerId);
 }
