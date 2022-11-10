@@ -1,5 +1,6 @@
 package shop.kokodo.sellerservice.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import shop.kokodo.sellerservice.entity.Seller;
 
@@ -16,5 +17,6 @@ import shop.kokodo.sellerservice.entity.Seller;
  */
 public interface SellerRepository extends JpaRepository<Seller, Long> {
 
+    <T> List<T> findByIdIn(List<Long> ids, Class<T> type);
 
 }
