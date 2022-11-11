@@ -1,5 +1,9 @@
 package shop.kokodo.sellerservice.controller;
 
+
+import java.util.List;
+import java.util.Map;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import shop.kokodo.sellerservice.dto.SignupRequest;
 import shop.kokodo.sellerservice.dto.response.Response;
 import shop.kokodo.sellerservice.entity.Seller;
+
 import shop.kokodo.sellerservice.service.SellerService;
 
 @RestController
@@ -46,5 +51,11 @@ public class SellerController {
     public Response getSellerName(@RequestHeader Long sellerId) {
         String name = sellerService.getSellerName(sellerId);
         return Response.success(name);
+    }
+
+    @GetMapping("/names")
+    public Response getSellerName(@RequestParam List<Long> sellerIds) {
+        Map<Long, String> sellerNameMap = sellerService.getSellerNames(sellerIds);
+        return Response.success(sellerNameMap);
     }
 }

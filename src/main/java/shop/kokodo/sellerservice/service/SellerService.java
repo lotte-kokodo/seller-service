@@ -1,8 +1,11 @@
 package shop.kokodo.sellerservice.service;
 
+import java.util.List;
+import java.util.Map;
+import shop.kokodo.sellerservice.entity.Seller;
+
 import java.util.Optional;
 import shop.kokodo.sellerservice.dto.SignupRequest;
-import shop.kokodo.sellerservice.entity.Seller;
 
 public interface SellerService {
 
@@ -11,4 +14,6 @@ public interface SellerService {
     Seller createSeller(SignupRequest req);
 
     String getSellerName(Long sellerId);
+
+    Map<Long, String> getSellerNames(List<Long> sellerIds);
 }

@@ -5,7 +5,6 @@ INSERT INTO seller (`seller_id`,`created_date`,`last_modified_date`,`balance`,`b
 VALUES (2,'2022-11-10 14:38:32.638555','2022-11-10 14:38:32.638555',100000,'1998-08-15','nayeon@seller.kokodo.shop',true,'VIP','나연의 스토어','010-5678-56789',true,'롯데택배','서울특별시 송파구','서울특별시 송파구',true,'롯데택배',true,'nayeon','$2a$10$rrQdq4.e0Wg6hxjOEmQUw.xLNNW0RsoedZ.VzjYo8oRB8A7B8mGIq');
 
 
-
 insert into commission_policy(id,seller_id, basic, delivery_support, discount_support, etc, first_payment_delivery, medium_company_cost_refund, sales_promotion, created_date, last_modified_date)
  values(1, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.0, now(), now());
 
