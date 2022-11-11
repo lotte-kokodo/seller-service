@@ -5,10 +5,15 @@ import java.util.Map;
 import shop.kokodo.sellerservice.entity.Seller;
 
 import java.util.Optional;
+import shop.kokodo.sellerservice.dto.SignupRequest;
 
 public interface SellerService {
 
-    public Optional<Seller> findBySellerId(Long sellerId);
+    Optional<Seller> findBySellerId(Long sellerId);
 
-    public Map<Long, String> getSellerNames(List<Long> sellerIds);
+    Seller createSeller(SignupRequest req);
+
+    String getSellerName(Long sellerId);
+
+    Map<Long, String> getSellerNames(List<Long> sellerIds);
 }
