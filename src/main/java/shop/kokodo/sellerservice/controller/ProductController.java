@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 import shop.kokodo.sellerservice.client.SellerServiceClient;
 import shop.kokodo.sellerservice.dto.KafkaProduct;
+import shop.kokodo.sellerservice.dto.PagingProductDto;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
 import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
@@ -61,17 +62,26 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity findByProductNameAndStatusAndDate(@Param String productName, @Param Integer status
-            , @Param String startDate, @Param String endDate, @Param Long sellerId) {
+            , @Param String startDate, @Param String endDate, @Param Long sellerId, @Param Integer page) {
         Map<String, Object> params = new HashMap<>();
         params.put("productName",productName);
         params.put("status",status);
         params.put("startDate",startDate);
         params.put("endDate",endDate);
         params.put("sellerId",sellerId);
+        params.put("page",page);
 
         CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerCircuit");
-        List<ResponseProduct> list = circuitBreaker.run(() -> sellerServiceClient.findByProductNameAndStatusAndDate(params),
-                throwable -> new ArrayList<>());
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        PagingProductDto pagingProductDto = circuitBreaker.run(() -> sellerServiceClient.findByProductNameAndStatusAndDate(params),
+                throwable -> new PagingProductDto(new ArrayList<>(),0));
+        return ResponseEntity.status(HttpStatus.OK).body(pagingProductDto);
+    }
+
+    @GetMapping("/stock/{sellerId}/{page}")
+    public ResponseEntity findByProductStockLack(@PathVariable long sellerId, @PathVariable int page) {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerProductStcok");
+        PagingProductDto pagingProductDto = circuitBreaker.run(() -> sellerServiceClient.findByProductStockLack(sellerId,page),
+                throwable -> new PagingProductDto(new ArrayList<>(),0));
+        return ResponseEntity.status(HttpStatus.OK).body(pagingProductDto);
     }
 }
