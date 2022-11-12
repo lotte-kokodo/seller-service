@@ -3,6 +3,8 @@ package shop.kokodo.sellerservice.controller;
 
 import feign.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 import shop.kokodo.sellerservice.client.SellerServiceClient;
 import shop.kokodo.sellerservice.dto.KafkaProduct;
+import shop.kokodo.sellerservice.dto.PagingProductDto;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
 import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
@@ -18,6 +21,7 @@ import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
 import shop.kokodo.sellerservice.s3.AwsS3Service;
 import shop.kokodo.sellerservice.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +31,13 @@ import java.util.Map;
 public class ProductController {
     private final SellerServiceClient sellerServiceClient;
     private final ProductService productService;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Autowired
-    public ProductController(SellerServiceClient sellerServiceClient, ProductService productService) {
+    public ProductController(SellerServiceClient sellerServiceClient, ProductService productService, CircuitBreakerFactory circuitBreakerFactory) {
         this.sellerServiceClient = sellerServiceClient;
         this.productService = productService;
+        this.circuitBreakerFactory = circuitBreakerFactory;
     }
 
     @PostMapping
@@ -56,7 +62,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity findByProductNameAndStatusAndDate(@Param String productName, @Param Integer status
-            , @Param String startDate, @Param String endDate, @Param Long sellerId,@Param int page) {
+            , @Param String startDate, @Param String endDate, @Param Long sellerId, @Param Integer page) {
         Map<String, Object> params = new HashMap<>();
         params.put("productName",productName);
         params.put("status",status);
@@ -65,8 +71,17 @@ public class ProductController {
         params.put("sellerId",sellerId);
         params.put("page",page);
 
-        List<ResponseProduct> list = sellerServiceClient.findByProductNameAndStatusAndDate(params);
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerCircuit");
+        PagingProductDto pagingProductDto = circuitBreaker.run(() -> sellerServiceClient.findByProductNameAndStatusAndDate(params),
+                throwable -> new PagingProductDto(new ArrayList<>(),0));
+        return ResponseEntity.status(HttpStatus.OK).body(pagingProductDto);
+    }
 
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+    @GetMapping("/stock/{sellerId}/{page}")
+    public ResponseEntity findByProductStockLack(@PathVariable long sellerId, @PathVariable int page) {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerProductStcok");
+        PagingProductDto pagingProductDto = circuitBreaker.run(() -> sellerServiceClient.findByProductStockLack(sellerId,page),
+                throwable -> new PagingProductDto(new ArrayList<>(),0));
+        return ResponseEntity.status(HttpStatus.OK).body(pagingProductDto);
     }
 }
