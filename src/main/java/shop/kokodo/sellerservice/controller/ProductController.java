@@ -15,6 +15,7 @@ import shop.kokodo.sellerservice.dto.KafkaProduct;
 import shop.kokodo.sellerservice.dto.PagingProductDto;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
+import shop.kokodo.sellerservice.dto.product.request.RequestReview;
 import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 import shop.kokodo.sellerservice.dto.response.Response;
 import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
@@ -60,6 +61,11 @@ public class ProductController {
         return Response.success();
     }
 
+    @PostMapping("/stock")
+    public Response updateStock(@RequestBody RequestReview requestReview){
+        productService.updateStock(requestReview);
+        return Response.success();
+    }
     @GetMapping
     public ResponseEntity findByProductNameAndStatusAndDate(@Param String productName, @Param Integer status
             , @Param String startDate, @Param String endDate, @Param Long sellerId, @Param Integer page) {

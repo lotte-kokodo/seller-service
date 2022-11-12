@@ -9,6 +9,7 @@ import shop.kokodo.sellerservice.dto.KafkaProductTemplate;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
 import shop.kokodo.sellerservice.dto.TemplateDto;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
+import shop.kokodo.sellerservice.dto.product.request.RequestReview;
 import shop.kokodo.sellerservice.messagequeue.ProductSaveProducer;
 import shop.kokodo.sellerservice.s3.AwsS3Service;
 
@@ -56,6 +57,11 @@ public class ProductServiceImpl implements ProductService{
 
         /* kafka save template product*/
         productSaveProducer.send("product-save-template",kafkaProductTemplate);
+    }
+
+    @Override
+    public void updateStock(RequestReview requestReview) {
+        productSaveProducer.send("product-stock-update",requestReview);
     }
 
     private List<String> uploadList(List<MultipartFile> photo){
