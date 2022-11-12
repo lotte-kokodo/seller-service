@@ -56,13 +56,14 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity findByProductNameAndStatusAndDate(@Param String productName, @Param Integer status
-            , @Param String startDate, @Param String endDate, @Param Long sellerId) {
+            , @Param String startDate, @Param String endDate, @Param Long sellerId,@Param int page) {
         Map<String, Object> params = new HashMap<>();
         params.put("productName",productName);
         params.put("status",status);
         params.put("startDate",startDate);
         params.put("endDate",endDate);
         params.put("sellerId",sellerId);
+        params.put("page",page);
 
         List<ResponseProduct> list = sellerServiceClient.findByProductNameAndStatusAndDate(params);
 
