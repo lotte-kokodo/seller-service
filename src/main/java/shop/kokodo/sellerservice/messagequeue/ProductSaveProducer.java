@@ -33,8 +33,7 @@ public class ProductSaveProducer {
         }
 
         kafkaTemplate.send(topic, jsonInString);
-        log.info("kafka Producer sent data from Seller Product save : " + kafkaProduct);
-
+        log.info("kafka Producer sent data from Seller Product : " + kafkaProduct);
     }
 
 

@@ -1,3 +1,7 @@
+ALTER TABLE seller convert to charset utf8;
+ALTER TABLE commission_policy convert to charset utf8;
+ALTER TABLE seller_finance_info convert to charset utf8;
+
 INSERT INTO seller (`seller_id`,`created_date`,`last_modified_date`,`balance`,`birthday`,`email`,`email_agree`,`grade`,`name`,`phone`,`phone_agree`,`re_courier`,`re_pos`,`release_pos`,`retail_agree`,`retail_courier`,`return_agree`,`user_login_id`,`user_pass_word`)
 VALUES (1,'2022-11-10 14:37:42.701119','2022-11-10 14:37:42.701119',100000,'1996-12-12','namhyeop@seller.kokodo.shop',true,'VIP','협이의 스토어','010-1234-1234',true,'롯데택배','서울특별시 강동구','서울특별시 강동구',true,'롯데택배',true,'namhyeop','$2a$10$OJtF.ZyDlRO3X0iyH1OR/OnYSU3oWxLs8Ac.5a/h9WhzXnrCDpn.S');
 

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
 import shop.kokodo.sellerservice.dto.product.request.RequestProduct;
+import shop.kokodo.sellerservice.dto.product.request.RequestReview;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface ProductService {
     public void saveProductAndProductTemplate(List<MultipartFile> photo,
                                               TemplateArticle templateArticle,
                                               RequestProduct requestProduct, MultipartFile thumbnail);
+
+    public void updateStock(RequestReview requestReview);
 }
