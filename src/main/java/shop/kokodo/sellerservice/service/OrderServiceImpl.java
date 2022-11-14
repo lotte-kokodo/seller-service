@@ -16,4 +16,9 @@ public class OrderServiceImpl implements OrderService {
     public Long getTodayOrderCount(Long sellerId) {
         return orderServiceClient.getTodayOrderCount(sellerId);
     }
+
+    @Override
+    public Long[] getMonthlyOrderCount(Long sellerId) {
+        return orderServiceClient.getMonthlyOrderCount(sellerId);
+    }
 }

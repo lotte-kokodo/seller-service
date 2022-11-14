@@ -10,4 +10,7 @@ public interface OrderServiceClient {
     @GetMapping("/seller/{sellerId}/dashboard/todayCount")
     Long getTodayOrderCount(@PathVariable Long sellerId);
 
+    @GetMapping("/seller/{sellerId}/productId")
+    Long[] getMonthlyOrderCount(@PathVariable Long sellerId);
+
 }
