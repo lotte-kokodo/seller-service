@@ -11,15 +11,15 @@ import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name="product-service", url = "http://localhost:8001")
+@FeignClient(name="product-service")
 public interface SellerServiceClient {
 
-    @GetMapping("/product-service/product")
+    @GetMapping("/product")
     PagingProductDto findByProductNameAndStatusAndDate(@SpringQueryMap Map<String, Object> params);
 
-    @GetMapping("/product-service/product/seller/stock/{sellerId}/{page}")
+    @GetMapping("/product/seller/stock/{sellerId}/{page}")
     PagingProductDto findByProductStockLack(@PathVariable long sellerId, @PathVariable int page);
 
-    @GetMapping("/product-service/category/all")
+    @GetMapping("/category/all")
     List<CategoryDto> categoryAll();
 }
