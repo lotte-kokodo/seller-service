@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import shop.kokodo.sellerservice.dto.CategoryDto;
 import shop.kokodo.sellerservice.dto.PagingProductDto;
 import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 
@@ -18,4 +19,7 @@ public interface SellerServiceClient {
 
     @GetMapping("/product-service/product/seller/stock/{sellerId}/{page}")
     PagingProductDto findByProductStockLack(@PathVariable long sellerId, @PathVariable int page);
+
+    @GetMapping("/product-service/category/all")
+    List<CategoryDto> categoryAll();
 }

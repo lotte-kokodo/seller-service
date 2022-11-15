@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 import shop.kokodo.sellerservice.client.SellerServiceClient;
+import shop.kokodo.sellerservice.dto.CategoryDto;
 import shop.kokodo.sellerservice.dto.KafkaProduct;
 import shop.kokodo.sellerservice.dto.PagingProductDto;
 import shop.kokodo.sellerservice.dto.TemplateArticle;
@@ -89,5 +90,13 @@ public class ProductController {
         PagingProductDto pagingProductDto = circuitBreaker.run(() -> sellerServiceClient.findByProductStockLack(sellerId,page),
                 throwable -> new PagingProductDto(new ArrayList<>(),0));
         return ResponseEntity.status(HttpStatus.OK).body(pagingProductDto);
+    }
+
+    @GetMapping("/category/all")
+    public Response categoryAll() {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("categoryAll");
+        List<CategoryDto> categoryList = circuitBreaker.run(() -> sellerServiceClient.categoryAll(),
+                throwable -> new ArrayList<>());
+        return Response.success(categoryList);
     }
 }
