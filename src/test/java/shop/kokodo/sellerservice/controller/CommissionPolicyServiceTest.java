@@ -40,11 +40,9 @@ class CommissionPolicyServiceTest {
     CommissionPolicyRepository commissionPolicyRepository;
     @Autowired
     SellerRepository sellerRepository;
-    @Autowired
-    EntityManager em;
 
     @BeforeEach
-    public void beforEach(){
+    public void beforeEach(){
         commissionPolicyRepository.deleteAll();;
         sellerRepository.deleteAll();
     }

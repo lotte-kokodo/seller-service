@@ -19,8 +19,6 @@ spring:
   sleuth:
     sampler:
       probability: 1.0
-  profiles:
-    active: prod
 
   datasource:
     driver-class-name:
@@ -58,11 +56,6 @@ management:
       exposure:
         include: refresh, health, beans, busrefresh, info, prometheus, metrics
 
-product-service:
-  url: http://PRODUCT-SERVICE/product-service/product
-  exception:
-    product_is_empty: There is no item
-
 # AWS Bucket
 cloud:
   aws:
@@ -77,3 +70,11 @@ cloud:
       static:
     stack:
       auto: false
+
+token:
+  seller:
+    access:
+      exp: 86400000
+    refresh:
+      exp: 604800000
+    secret: seller_token
