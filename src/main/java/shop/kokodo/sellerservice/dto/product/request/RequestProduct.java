@@ -21,4 +21,7 @@ public class RequestProduct {
         private String thumbnail;
         private long sellerId;
         private int deliveryFee;
+
+
+
 }

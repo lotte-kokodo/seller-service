@@ -1,3 +1,4 @@
+
 server:
   port: 0 # Eureka 로부터 자동 포트 부여
 
@@ -36,3 +37,10 @@ cloud:
     stack:
       auto: false
 
+token:
+  seller:
+    access:
+      exp: 86400000
+    refresh:
+      exp: 604800000
+    secret: seller_token

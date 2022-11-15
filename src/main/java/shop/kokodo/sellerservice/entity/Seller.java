@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import shop.kokodo.sellerservice.dto.SignupRequest;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ public class Seller extends BaseEntity{
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<SellerFinanceInfo> sellerFinanceInfo;
-    private String userLongId;
+    private String userLoginId;
 
     private String userPassWord;
 
@@ -52,4 +53,43 @@ public class Seller extends BaseEntity{
     private Boolean retailAgree;
 
     private String grade;
+
+    public Seller(List<SellerFinanceInfo> sellerFinanceInfo, String userLongId, String userPassWord, String phone, String email, Boolean phoneAgree, Boolean emailAgree, String birthday, String name, Long balance, String rePos, String releasePos, String reCourier, String retailCourier, Boolean returnAgree, Boolean retailAgree, String grade) {
+        this.sellerFinanceInfo = sellerFinanceInfo;
+        this.userLoginId = userLongId;
+        this.userPassWord = userPassWord;
+        this.phone = phone;
+        this.email = email;
+        this.phoneAgree = phoneAgree;
+        this.emailAgree = emailAgree;
+        this.birthday = birthday;
+        this.name = name;
+        this.balance = balance;
+        this.rePos = rePos;
+        this.releasePos = releasePos;
+        this.reCourier = reCourier;
+        this.retailCourier = retailCourier;
+        this.returnAgree = returnAgree;
+        this.retailAgree = retailAgree;
+        this.grade = grade;
+    }
+
+    public Seller (SignupRequest dto, String encryptedPassword) {
+        this.userLoginId = dto.getUserLoginId();
+        this.userPassWord = encryptedPassword;
+        this.phone = dto.getPhone();
+        this.email = dto.getEmail();
+        this.phoneAgree = dto.getPhoneAgree();
+        this.emailAgree = dto.getEmailAgree();
+        this.birthday = dto.getBirthday();
+        this.name = dto.getName();
+        this.balance = dto.getBalance();
+        this.rePos = dto.getRePos();
+        this.releasePos = dto.getReleasePos();
+        this.reCourier = dto.getReCourier();
+        this.retailCourier = dto.getRetailCourier();
+        this.returnAgree = dto.getReturnAgree();
+        this.retailAgree = dto.getRetailAgree();
+        this.grade = dto.getGrade();
+    }
 }
