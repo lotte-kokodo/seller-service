@@ -20,6 +20,6 @@ public interface SellerServiceClient {
     @GetMapping("/product/seller/stock/{sellerId}/{page}")
     PagingProductDto findByProductStockLack(@PathVariable long sellerId, @PathVariable int page);
 
-    @GetMapping("/category/all")
+    @GetMapping("/redis/category/all")
     List<CategoryDto> categoryAll();
 }

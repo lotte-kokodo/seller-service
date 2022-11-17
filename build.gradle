@@ -74,8 +74,14 @@ dependencies {
     //junit
     implementation 'junit:junit:4.13.1'
 
-    //modelmapper
-    implementation group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '3.1.0'
+    //format (gson,mapper,jackson)
+    implementation 'com.google.code.gson:gson:2.10'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.3'
+    implementation group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+
 
     //xstream
     implementation group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.16'
