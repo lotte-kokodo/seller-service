@@ -1,0 +1,80 @@
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-service:9001/eureka
+
+spring:
+  application:
+    name: seller-service
+  zipkin:
+    base-url: http://zipkin:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+
+  datasource:
+    driver-class-name:
+    url:
+    slave-list:
+      - name: slave-1
+        url:
+      - name: slave-2
+        url:
+    username:
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+  #    database-platform: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    shop.kokodo.sellerservice.client: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh, info, prometheus, metrics
+
+# AWS Bucket
+cloud:
+  aws:
+    # AWS 접근 키
+    credentials:
+      access-key:
+      secret-key:
+    # S3 정보
+    s3:
+      bucket:
+    region:
+      static:
+    stack:
+      auto: false
+
+token:
+  seller:
+    access:
+      exp: 86400000
+    refresh:
+      exp: 604800000
+    secret: seller_token
