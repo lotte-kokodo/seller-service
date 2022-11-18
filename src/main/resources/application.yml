@@ -56,5 +56,13 @@ management:
       exposure:
         include: health, busresfresh, beans
 
+token:
+  seller:
+    access:
+      exp: 86400000
+    refresh:
+      exp: 604800000
+    secret: seller_token
+
 kafka:
   address:
