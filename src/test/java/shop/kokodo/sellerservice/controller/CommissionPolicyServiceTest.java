@@ -36,7 +36,7 @@ class CommissionPolicyServiceTest extends TestContext {
     @Autowired
     SellerRepository sellerRepository;
 
-    @Test
+//    @Test
     public void getCommissionPolicyTest() throws Exception{
         //given
         //when
