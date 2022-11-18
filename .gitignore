@@ -37,9 +37,6 @@ out/
 .vscode/
 
 ### Development Environment ###
-<<<<<<< HEAD
-#src/main/resources/application*.yml
-=======
-src/main/resources/application*.yml
-src/test/resources/application*.yml
->>>>>>> origin/dev
+src/main/resources/application-dev.yml
+#src/test/resources/application*.yml
+
