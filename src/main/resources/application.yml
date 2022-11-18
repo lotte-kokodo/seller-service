@@ -55,14 +55,11 @@ management:
       exposure:
         include: refresh, health, beans, busrefresh, info, prometheus, metrics
 
-# AWS Bucket
 cloud:
   aws:
-# AWS접근 키
 credentials:
   access-key:
   secret-key:
-# S3정보
 s3:
   bucket:
   region:
