@@ -27,6 +27,7 @@ import java.util.Map;
 public class DbConfig {
 
     private final DbProperty dbProperty;
+
     private final JpaProperties jpaProperties;
 
     @Bean
