@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface CommissionPolicyRepository extends JpaRepository<CommissionPolicy, Long> {
 
-    @Query("select new shop.kokodo.sellerservice.dto.CommissionPolicyDto(c.id, c.basic, c.salesPromotion, c.firstPaymentDelivery, c.deliverySupport, c.discountSupport, c.mediumCompanyCostRefund, c.etc) " +
+    @Query("select c " +
             "from CommissionPolicy c join c.seller " +
             "where c.id in :sellerId")
     List<CommissionPolicyDto> findCommissionPolicyBySellerId(List<Long> sellerId);
