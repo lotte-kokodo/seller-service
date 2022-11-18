@@ -57,6 +57,8 @@ management:
 
 cloud:
   aws:
+    stack:
+      auto: false
 credentials:
   access-key:
   secret-key:
