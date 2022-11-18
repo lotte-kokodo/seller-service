@@ -1,9 +1,5 @@
-#spring:
-#  profiles:
-#    active: dev
-
 server:
-  port: 0 # Eureka로부터 자동 포트 부여
+  port: 0
 
 eureka:
   instance:
@@ -16,7 +12,7 @@ eureka:
 
 spring:
   application:
-    name: product-service
+    name: seller-service
   zipkin:
     base-url: http://zipkin:9411
     enabled: true
@@ -32,29 +28,47 @@ spring:
     username:
     password:
 
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
 
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+    com.example.order-service: DEBUG
+    com.amazonaws.util.EC2MetadataUtils: error
 
 management:
   endpoints:
     web:
       exposure:
-        include: health, busresfresh, beans
+        include: refresh, health, beans, busrefresh, info, prometheus, metrics
+
+# AWS Bucket
+cloud:
+  aws:
+# AWS접근 키
+credentials:
+  access-key:
+  secret-key:
+# S3정보
+s3:
+  bucket:
+  region:
+    static:
+  stack:
+    auto: false
 
 token:
   seller:
