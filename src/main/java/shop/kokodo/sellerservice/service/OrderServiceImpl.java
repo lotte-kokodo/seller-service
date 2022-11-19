@@ -2,6 +2,8 @@ package shop.kokodo.sellerservice.service;
 
 import org.springframework.stereotype.Service;
 import shop.kokodo.sellerservice.client.OrderServiceClient;
+import shop.kokodo.sellerservice.dto.order.DashboardOrderCountDto;
+import shop.kokodo.sellerservice.dto.order.OrderCountResponseDto;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -13,8 +15,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long getTodayOrderCount(Long sellerId) {
-        return orderServiceClient.getTodayOrderCount(sellerId);
+    public DashboardOrderCountDto getOrderCount(Long sellerId) {
+        OrderCountResponseDto orderCountResponseDto = orderServiceClient.getOrderCount(sellerId);
+        return new DashboardOrderCountDto(orderCountResponseDto.getTodayOrderCount(), orderCountResponseDto.getYesterdayOrderCount());
     }
 
     @Override
