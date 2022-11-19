@@ -1,0 +1,81 @@
+server:
+  port: 0
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-service:9001/eureka
+
+spring:
+  application:
+    name: seller-service
+  zipkin:
+    base-url: http://zipkin:9411
+    enabled: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url:
+    slave-list:
+      slave1:
+      slave2:
+    username:
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    com.example.order-service: DEBUG
+    com.amazonaws.util.EC2MetadataUtils: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh, info, prometheus, metrics
+
+cloud:
+  aws:
+    stack:
+      auto: false
+credentials:
+  access-key:
+  secret-key:
+s3:
+  bucket:
+  region:
+    static:
+  stack:
+    auto: false
+
+token:
+  seller:
+    access:
+      exp: 86400000
+    refresh:
+      exp: 604800000
+    secret: seller_token
+
+kafka:
+  address:
