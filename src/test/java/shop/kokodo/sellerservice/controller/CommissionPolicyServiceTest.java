@@ -35,10 +35,8 @@ class CommissionPolicyServiceTest extends TestContext {
     CommissionPolicyRepository commissionPolicyRepository;
     @Autowired
     SellerRepository sellerRepository;
-    @Autowired
-    EntityManager em;
 
-    @Test
+//    @Test
     public void getCommissionPolicyTest() throws Exception{
         //given
         //when

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import shop.kokodo.sellerservice.dto.CategoryDto;
 import shop.kokodo.sellerservice.dto.PagingProductDto;
-import shop.kokodo.sellerservice.dto.product.response.ResponseProduct;
 
 import java.util.List;
 import java.util.Map;
@@ -22,4 +21,7 @@ public interface SellerServiceClient {
 
     @GetMapping("/redis/category/all")
     List<CategoryDto> categoryAll();
+
+    @GetMapping("/product/seller/productCount/{sellerId}")
+    long sellerProductCount(@PathVariable long sellerId);
 }

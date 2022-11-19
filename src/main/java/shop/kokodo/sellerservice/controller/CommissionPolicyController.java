@@ -23,6 +23,7 @@ public class CommissionPolicyController {
     @GetMapping("/commissionPolicy")
     public List<CommissionPolicyDto> searchCommissionPolicy(@RequestParam List<Long> sellerId){
         List<CommissionPolicyDto> commissionPolicyList = commissionPolicyService.getCommissionPolicy(sellerId);
+        log.info("seller commissionPolicy {}", commissionPolicyList);
         return commissionPolicyList;
     }
 }
