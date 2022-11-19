@@ -99,4 +99,12 @@ public class ProductController {
                 throwable -> new ArrayList<>());
         return Response.success(categoryList);
     }
+
+    @GetMapping("/count/{sellerId}")
+    public Response sellerProductCount(@PathVariable long sellerId) {
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("sellerProductCount");
+        long count = circuitBreaker.run(() -> sellerServiceClient.sellerProductCount(sellerId), throwable -> 0L);
+
+        return Response.success(count);
+    }
 }
