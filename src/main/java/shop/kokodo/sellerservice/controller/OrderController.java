@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import shop.kokodo.sellerservice.dto.order.DashboardOrderCountDto;
 import shop.kokodo.sellerservice.dto.order.MonthlyOrderCountDto;
+import shop.kokodo.sellerservice.dto.order.OrderCountResponseDto;
 import shop.kokodo.sellerservice.dto.response.Response;
 import shop.kokodo.sellerservice.service.OrderService;
 
@@ -18,10 +20,10 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/todayCount")
-    public Response getTodayOrderCount(@RequestHeader Long sellerId) {
-        Long todayOrderCount = orderService.getTodayOrderCount(sellerId);
-        return Response.success(todayOrderCount);
+    @GetMapping("/count")
+    public Response getOrderCount(@RequestHeader Long sellerId) {
+        DashboardOrderCountDto orderCountDto = orderService.getOrderCount(sellerId);
+        return Response.success(orderCountDto);
     }
 
     @GetMapping("/monthlyCount")
